@@ -29,9 +29,6 @@ class Search(forms.Form):
                 queryset.filter(comments__iregex=regex) |
                 queryset.filter(post_id__iregex=regex))
 
-    def search(self):
-        return self.filter(models.Message.objects)
-
 
 class RowEdit(forms.ModelForm):
     class Meta:

@@ -24,11 +24,16 @@ class Search(View):
 class SearchJSON(BaseDatatableView):
     " JSON view backing datatable "
     model = models.Message
-    columns = ['label_user', 'creation_datetime', 'text', 'comments']
+    columns = ['label_user', 'creation_datetime', 'city_state',
+               'text', 'comments']
     order_columns = columns
     max_display_length = 1000
 
     def filter_queryset(self, qs):
+        qs = qs.filter(label_user__gte=1) | qs.filter(label_auto__gte=1)
+        qs = qs.filter(
+            city_state__iregex=
+                self.request.GET.get('columns[2][search][value]'));
         form = forms.Search(dict(regex=self.request.GET.get('search[value]')))
         return form.filter(qs)
 

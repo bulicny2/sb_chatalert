@@ -1,6 +1,6 @@
 """
-Management command to import a CSV file into the database. Used to introduce
-new data to the system to be labeled and displayed.
+Management command to import a CSV file into the database, which specifies what
+city-state information each post has
 """
 
 from __future__ import print_function
@@ -41,43 +41,13 @@ class Command(BaseCommand):
         return result
 
     @classmethod
-    def parse_date(cls, date_text):
-        if not date_text:
-            return None
-        patterns = ["%m/%d/%y %H:%M",
-                    "%Y-%m-%d %H:%M:%S",
-                    "%m/%d/%Y %H:%M:%S",
-                    "%m/%d/%Y %H:%M"]
-        for pattern in patterns:
-            try:
-                return datetime.datetime.strptime(date_text, pattern)
-            except ValueError:
-                pass
-        raise ValueError("Date text %r didn't match any of the patterns %s" %
-                         (date_text, patterns))
-                
-
-    @classmethod
     def import_row(cls, row):
         " Import a single row into the database "
         row = cls.clean_newlines(row)
         try:
             with transaction.atomic():
                 message, _ = Message.objects.get_or_create(guid=row["guid"])
-                message.creation_datetime = \
-                    cls.parse_date(row["creation_date"])
-                message.message_type = row["type"]
-                message.source = row["source"]
-                message.url = row["url"]
-                message.text = row["text"]
-                message.author = row["author"]
-                message.author_age = row["author_age"]
-                message.city_state = row["city_state"]
-                message.lat = row["lat"] or 0
-                message.lng = row["lng"] or 0
-                message.phone_number = row["phone_number"]
-                message.post_id = row["post_id"]                
-                message.label_user = row.get("label") or -1
+                message.city_state = row["city"]
                 message.clean()
                 message.save()
 

@@ -10,10 +10,21 @@
                 <tr>
                     <th>&#x26a0;</th>
                     <th>Date</th>
+                    <th>Locale</th>
                     <th>Message</th>
                     <th>Comments</th>
+
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Locale</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -29,6 +40,7 @@
                 {"data": 1},
                 {"data": 2},
                 {"data": 3},
+                {"data": 4},
             ],
             "processing": true,
             "serverSide": true,
@@ -46,11 +58,29 @@
         };
         
         window.setInterval(window.refresh_table, 60 * 1000);
+
+        // Apply the search
+        $('.search-table').DataTable().columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    console.log(that, this, that.search(), this.value);
+                    that.search(this.value).draw();
+                }
+            });
+        });
     });
 
     $('table').on('change', 'form', function(ev) {
         console.log(ev, ev.currentTarget.submit());
         window.refresh_table();
+    });
+
+    $('tfoot th').each(function (i) {
+        if (i == 2) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search '+title+'" />' );
+        }
     });
 </script>
 
