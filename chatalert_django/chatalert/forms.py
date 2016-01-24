@@ -1,3 +1,5 @@
+import uuid
+
 from django import forms
 
 from . import models
@@ -29,13 +31,14 @@ class Search(forms.Form):
         return self.filter(models.Message.objects)
 
 
-class RowLabel(forms.ModelForm):
+class RowEdit(forms.ModelForm):
     class Meta:
         model = models.Message
-        fields = ['label_user']
+        fields = ['label_user', 'comments']
 
     def __init__(self, *args, **kwargs):
-        super(RowLabel, self).__init__(*args, **kwargs)
+        kwargs.setdefault('auto_id', "id_" + str(uuid.uuid4()) + "_%s")
+        super(RowEdit, self).__init__(*args, **kwargs)
         if not self.is_bound:
             if "label_user" not in self.initial:
                 self.initial["label_user"] = self.instance["label_auto"]

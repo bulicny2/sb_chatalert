@@ -18,7 +18,7 @@ class Search(View):
 class SearchJSON(BaseDatatableView):
     " JSON view backing datatable "
     model = models.Message
-    columns = ['label_user', 'creation_datetime', 'text']
+    columns = ['label_user', 'creation_datetime', 'text', 'comments']
     order_columns = columns
     max_display_length = 1000
 
@@ -27,8 +27,10 @@ class SearchJSON(BaseDatatableView):
         return form.filter(qs)
 
     def render_column(self, row, column):
-        if column == 'label_user':
-            fake_form = forms.RowLabel(instance=row)
-            return "<form>%s</form>" % (fake_form['label_user'],)
-            
-        return super(SearchJSON, self).render_column(row, column)
+        fake_form = forms.RowEdit(instance=row)
+
+        if column in {'label_user', 'comments'}:
+            return "<form>%s</form>" % (fake_form[column],)
+        else:
+            return super(SearchJSON, self).render_column(row, column)
+
