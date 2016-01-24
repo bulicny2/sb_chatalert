@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'handlers': {
         'file': {
             'level': 'DEBUG',
@@ -146,6 +146,11 @@ LOGGING = {
             'handlers': ['file', 'console'],
             'level': 'INFO',
             'propagate': False,
-        }
+        },
+        'django_datatables_view': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     },
 }

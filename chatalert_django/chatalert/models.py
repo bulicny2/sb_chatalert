@@ -27,6 +27,7 @@ class Message(models.Model):
     phone_number = models.TextField(blank=True)
     post_id = models.TextField(blank=True)
     # What do we do about timezone fields?
+    comments = models.TextField(blank=True)
 
     label_auto = models.IntegerField(choices=LABEL_CHOICES,
                                      default=LABEL_NO_LABEL)

@@ -1,11 +1,46 @@
 {% extends "core/base.html" %}
 
+{% block title %}ChatAlert{% endblock %}
+
 {% block content %}
-<form>
-    {{ search_form }}
-    <input type=submit />
-</form>
-{% for row in search_results %}
-    <p>{{ row.text }}
-{% endfor %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <table class="table search-table">
+            <thead>
+                <tr>
+                    <th>&#x26a0;</th>
+                    <th>Date</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var table = $('.search-table').dataTable({
+            "ajax": "{% url 'chatalert_search_json' %}",
+            "columns": [
+                {"data": 0},
+                {"data": 1},
+                {"data": 2},
+            ],
+            "processing": true,
+            "serverSide": true,
+            "order": [[0, "desc"], [1, "desc"]],
+            "responsive": true,
+            "fixedHeader": true,
+        });
+        console.log(table);
+
+
+        window.setInterval(function() {
+            // Reload table, but don't reset paging (the false argument)
+            console.log("refreshing...");
+            table.api().ajax.reload(null, false);
+        }, 60 * 1000);
+    });
+</script>
+
 {% endblock %}
