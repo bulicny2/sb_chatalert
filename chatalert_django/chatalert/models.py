@@ -17,7 +17,7 @@ class Message(models.Model):
     creation_datetime = models.DateTimeField(null=True, blank=True)
     message_type = models.TextField(blank=True)
     source = models.TextField(blank=True)
-    message_url = models.TextField(blank=True)
+    url = models.TextField(blank=True)
     text = models.TextField(blank=True)
     author = models.TextField(blank=True)
     author_age = models.IntegerField(null=True, blank=True)
