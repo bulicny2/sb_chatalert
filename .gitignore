@@ -1,1 +1,3 @@
 *.csv
+*.swp
+chatalert_django/debug.log
