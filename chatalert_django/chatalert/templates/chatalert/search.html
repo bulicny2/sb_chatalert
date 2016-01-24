@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<form>
+    {{ search_form }}
+    <input type=submit />
+</form>
+{% for row in search_results %}
+    <p>{{ row.text }}
+{% endfor %}
+{% endblock %}
