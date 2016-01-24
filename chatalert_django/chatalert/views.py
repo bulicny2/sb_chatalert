@@ -1,9 +1,15 @@
+import logging
+
 from django.views.generic import View
-from django.template.response import TemplateResponse
+from django.template.response import TemplateResponse, HttpResponse
+from django.core.urlresolvers import reverse
 
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
 from . import forms, models
+
+
+logger = logging.getLogger(__name__)
 
 
 class Search(View):
@@ -30,7 +36,24 @@ class SearchJSON(BaseDatatableView):
         fake_form = forms.RowEdit(instance=row)
 
         if column in {'label_user', 'comments'}:
-            return "<form>%s</form>" % (fake_form[column],)
+            return ("<form method=POST target='hidden-iframe' action=%s>%s</form>" %
+                    (reverse('chatalert_search_edit', kwargs=dict(pk=row.pk)),
+                     fake_form[column]))
         else:
             return super(SearchJSON, self).render_column(row, column)
 
+
+class SearchEdit(View):
+    def post(self, request, pk):
+        instance = models.Message.objects.get(pk=pk)
+        form = forms.RowEdit(request.POST, instance=instance)
+        if not form.is_valid():
+            import pdb; pdb.set_trace()
+            raise "Assert"
+        try:
+            form.save()
+            logger.info("Saved edit to %s", pk)
+        except:
+            import traceback; traceback.print_exc();
+            import pdb; pdb.post_mortem();
+        return HttpResponse()

@@ -80,6 +80,25 @@
             <script type="text/javascript"
                 src="{% static "core/bootstrap-3.3.6-dist/js/bootstrap.js" %}"></script>
 
+            <link href="{% static "core/chosen/chosen.css" %}" type="text/css"
+                media="all" rel="stylesheet">
+            <script type="text/javascript"
+                src="{% static "core/chosen/chosen.jquery.js" %}"></script>
+
+            <script>
+$(function () {
+    // CHEAT and set django-chosen activate script to run every second
+    window.setup_chzn = function() {
+        $(".chzn-select").each(function(i, select) {
+            var $select = $(select);
+            $select.chosen();
+        });
+    };
+
+    window.setInterval(window.setup_chzn, 1500);
+});
+            </script>
+
         {% endblock %}
     </head>
     <body>

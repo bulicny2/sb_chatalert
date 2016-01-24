@@ -18,6 +18,8 @@
     </div>
 </div>
 
+<iframe name="hidden-iframe" style="display:none"></iframe>
+
 <script>
     $(document).ready(function() {
         var table = $('.search-table').dataTable({
@@ -36,12 +38,19 @@
         });
         console.log(table);
 
-
-        window.setInterval(function() {
+        window.refresh_table = function() {
             // Reload table, but don't reset paging (the false argument)
             console.log("refreshing...");
             table.api().ajax.reload(null, false);
-        }, 60 * 1000);
+            window.setup_chzn();
+        };
+        
+        window.setInterval(window.refresh_table, 60 * 1000);
+    });
+
+    $('table').on('change', 'form', function(ev) {
+        console.log(ev, ev.currentTarget.submit());
+        window.refresh_table();
     });
 </script>
 

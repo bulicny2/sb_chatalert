@@ -30,6 +30,8 @@ class Message(models.Model):
     comments = models.TextField(blank=True)
 
     label_auto = models.IntegerField(choices=LABEL_CHOICES,
-                                     default=LABEL_NO_LABEL)
+                                     default=LABEL_NO_LABEL,
+                                     blank=True)
     label_user = models.IntegerField(choices=LABEL_CHOICES,
-                                     default=LABEL_NO_LABEL)
+                                     default=LABEL_NO_LABEL,
+                                     blank=True)

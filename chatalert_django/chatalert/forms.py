@@ -3,6 +3,7 @@ import uuid
 from django import forms
 
 from . import models
+from chosen import forms as chosenforms
 
 class Search(forms.Form):
     regex = forms.CharField(required=False)
@@ -25,6 +26,7 @@ class Search(forms.Form):
                 queryset.filter(lat__iregex=regex) |
                 queryset.filter(lng__iregex=regex) |
                 queryset.filter(phone_number__iregex=regex) |
+                queryset.filter(comments__iregex=regex) |
                 queryset.filter(post_id__iregex=regex))
 
     def search(self):
@@ -35,6 +37,16 @@ class RowEdit(forms.ModelForm):
     class Meta:
         model = models.Message
         fields = ['label_user', 'comments']
+        widgets = {'label_user': chosenforms.ChosenSelect,
+                   'comments': forms.Textarea(attrs=dict(rows=3))}
+
+    def clean(self):
+        " Don't change fields that weren't specified "
+        cleaned_data = super(RowEdit, self).clean()
+        for key in ['label_user', 'comments']:
+            if not cleaned_data[key]:
+                del cleaned_data[key]
+        return cleaned_data
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('auto_id', "id_" + str(uuid.uuid4()) + "_%s")
