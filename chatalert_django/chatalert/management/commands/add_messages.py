@@ -75,6 +75,7 @@ class Command(BaseCommand):
                 message.lng = row["lng"] or 0
                 message.phone_number = row["phone_number"]
                 message.post_id = row["post_id"]                
+                message.label_user = row["label"] or -1
                 message.clean()
                 message.save()
 
