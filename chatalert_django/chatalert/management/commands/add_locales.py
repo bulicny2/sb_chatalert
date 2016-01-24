@@ -47,7 +47,7 @@ class Command(BaseCommand):
         try:
             with transaction.atomic():
                 message, _ = Message.objects.get_or_create(guid=row["guid"])
-                message.city_state = row["city"]
+                message.city_state = "%s, %s" % (row["city"], row["state"])
                 message.clean()
                 message.save()
 
