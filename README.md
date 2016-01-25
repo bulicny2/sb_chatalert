@@ -7,19 +7,6 @@
 <b>Project:</b> Similar to a Google Media Alert System, this project would develop a tool that would search frequently scraped data from “john board” sites for a pre-described list of keywords, and automate notifications to practitioners and law enforcement officers when their activities or stakeholders are being referenced. Data collection could be searchable by keyword, geographic area, or by commentator username. 
 
 <b>Project Resources:</b>
-<ol>
-<li>Sample keyword list</li>
-<li>Review Site data (embedded below)</li>
-</ol>
-
-
-<b>Aggregated Data for Review Sites:</b> 
-<ol>
-<li>USA Sex Guide </li>
-<li>The Erotic Review </li>
-<li>Eccie</li>
-
-</ol>
 
 <b>Aggregated Data Includes:</b>
 <ol>
@@ -38,14 +25,6 @@
 <li> Month (2014-11 to 2015-10) – the data can be aggregated by month</li></ul>
 <ul>
 <li> Source (Eccie, The Erotic Review, USA Sex Guide) </li></ul>
-</ol>
-
-<b>Log-level Data for Review Sites: </b>
-<ol>
-<li>USA Sex Guide </li>
-<li>The Erotic Review </li>
-<li>Rubmaps</li>
-<li>Eccie</li>
 </ol>
 
 <b>Log-Level Data Includes:</b>
