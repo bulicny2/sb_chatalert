@@ -1,0 +1,1 @@
+SELECT * FROM all_forums_repaired_pg where text similar to '%(\b(raid|seiz|arrest)(e|ed|s|ing)?\b|busted|\bsting|shut.{1,10}down|leo|uncle|\ble\b|should avoid|police|sheriff|beware)%'
